@@ -42,6 +42,12 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 protocol LXFVideoCacheHostApi {
   /// 转换为缓存代理URL
   func convertToCacheProxyUrl(url: String) throws -> String
+  /// 设置可用的缓存大小
+  func setMaxCacheLength(cacheSize: Int64) throws
+  /// 获取当前缓存大小
+  func getCacheLength() throws -> Int64
+  /// 删除所有的缓存
+  func deleteAllCaches() throws
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -64,6 +70,50 @@ class LXFVideoCacheHostApiSetup {
       }
     } else {
       convertToCacheProxyUrlChannel.setMessageHandler(nil)
+    }
+    /// 设置可用的缓存大小
+    let setMaxCacheLengthChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.video_cache.LXFVideoCacheHostApi.setMaxCacheLength", binaryMessenger: binaryMessenger)
+    if let api = api {
+      setMaxCacheLengthChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let cacheSizeArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
+        do {
+          try api.setMaxCacheLength(cacheSize: cacheSizeArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      setMaxCacheLengthChannel.setMessageHandler(nil)
+    }
+    /// 获取当前缓存大小
+    let getCacheLengthChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.video_cache.LXFVideoCacheHostApi.getCacheLength", binaryMessenger: binaryMessenger)
+    if let api = api {
+      getCacheLengthChannel.setMessageHandler { _, reply in
+        do {
+          let result = try api.getCacheLength()
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      getCacheLengthChannel.setMessageHandler(nil)
+    }
+    /// 删除所有的缓存
+    let deleteAllCachesChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.video_cache.LXFVideoCacheHostApi.deleteAllCaches", binaryMessenger: binaryMessenger)
+    if let api = api {
+      deleteAllCachesChannel.setMessageHandler { _, reply in
+        do {
+          try api.deleteAllCaches()
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      deleteAllCachesChannel.setMessageHandler(nil)
     }
   }
 }

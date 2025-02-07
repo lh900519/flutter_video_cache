@@ -45,6 +45,12 @@ class LXFVideoCacheFlutterError (
 interface LXFVideoCacheHostApi {
   /** 转换为缓存代理URL */
   fun convertToCacheProxyUrl(url: String): String
+  /** 设置可用的缓存大小 */
+  fun setMaxCacheLength(cacheSize: Long)
+  /** 获取当前缓存大小 */
+  fun getCacheLength(): Long
+  /** 删除所有的缓存 */
+  fun deleteAllCaches()
 
   companion object {
     /** The codec used by LXFVideoCacheHostApi. */
@@ -63,6 +69,58 @@ interface LXFVideoCacheHostApi {
             var wrapped: List<Any?>
             try {
               wrapped = listOf<Any?>(api.convertToCacheProxyUrl(urlArg))
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.video_cache.LXFVideoCacheHostApi.setMaxCacheLength", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val cacheSizeArg = args[0].let { if (it is Int) it.toLong() else it as Long }
+            var wrapped: List<Any?>
+            try {
+              api.setMaxCacheLength(cacheSizeArg)
+              wrapped = listOf<Any?>(null)
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.video_cache.LXFVideoCacheHostApi.getCacheLength", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            var wrapped: List<Any?>
+            try {
+              wrapped = listOf<Any?>(api.getCacheLength())
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.video_cache.LXFVideoCacheHostApi.deleteAllCaches", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            var wrapped: List<Any?>
+            try {
+              api.deleteAllCaches()
+              wrapped = listOf<Any?>(null)
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }

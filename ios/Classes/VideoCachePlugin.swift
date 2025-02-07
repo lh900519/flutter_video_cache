@@ -33,4 +33,19 @@ class LXFVideoCacheHostApiImplementation: LXFVideoCacheHostApi {
     // 代理成功
     return proxyUrlObj.absoluteString
   }
+  
+  // 设置可用的缓存大小
+  func setMaxCacheLength(cacheSize: Int64) throws {
+    KTVHTTPCache.cacheSetMaxCacheLength(cacheSize)
+  }
+  
+  // 获取当前缓存大小
+  func getCacheLength() throws -> Int64 {
+    return KTVHTTPCache.cacheTotalCacheLength()
+  }
+  
+  func deleteAllCaches() throws {
+    KTVHTTPCache.cacheDeleteAllCaches()
+  }
+  
 }

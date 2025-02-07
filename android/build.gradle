@@ -4,8 +4,8 @@ version '1.0-SNAPSHOT'
 buildscript {
     ext.kotlin_version = '1.7.10'
     repositories {
-        maven { url "https://jitpack.io" }
-        maven { url 'https://maven.aliyun.com/repository/public' }
+        // maven { url "https://jitpack.io" }
+        // maven { url 'https://repo.huaweicloud.com/repository/maven' }
         google()
         mavenCentral()
     }
@@ -16,10 +16,10 @@ buildscript {
     }
 }
 
-allprojects {
+rootProject.allprojects {
     repositories {
-        maven { url "https://jitpack.io" }
-        maven { url 'https://maven.aliyun.com/repository/public' }
+        // maven { url "https://jitpack.io" }
+        maven { url 'https://repo.huaweicloud.com/repository/maven' }
         google()
         mavenCentral()
     }

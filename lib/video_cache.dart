@@ -13,4 +13,19 @@ class VideoCache {
   Future<String> convertToCacheProxyUrl(String url) async {
     return _hostApi.convertToCacheProxyUrl(url);
   }
+
+  /// 设置可用的缓存大小
+  Future setMaxCacheLength(int cacheSize) async {
+    return _hostApi.setMaxCacheLength(cacheSize);
+  }
+
+  /// 获取当前缓存大小
+  Future<int> getCacheLength() async {
+    return _hostApi.getCacheLength();
+  }
+
+  /// 删除所有的缓存
+  Future deleteAllCaches() async {
+    return _hostApi.deleteAllCaches();
+  }
 }

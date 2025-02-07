@@ -61,7 +61,9 @@ class _MyAppState extends State<MyApp> {
       additionalOptions: (context) {
         return <OptionItem>[
           OptionItem(
-            onTap: toggleVideo,
+            onTap: (context) {
+              toggleVideo();
+            },
             iconData: Icons.live_tv_sharp,
             title: 'Toggle Video Src',
           ),

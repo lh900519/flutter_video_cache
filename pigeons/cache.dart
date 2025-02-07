@@ -11,8 +11,19 @@ import 'package:pigeon/pigeon.dart';
   ),
   swiftOut: 'ios/Classes/LXFVideoCacheGeneratedApis.g.swift',
 ))
+
+// Flutter 调用原生代码
 @HostApi()
 abstract class LXFVideoCacheHostApi {
   /// 转换为缓存代理URL
   String convertToCacheProxyUrl(String url);
+
+  /// 设置可用的缓存大小
+  void setMaxCacheLength(int cacheSize);
+
+  /// 获取当前缓存大小
+  int getCacheLength();
+
+  /// 删除所有的缓存
+  void deleteAllCaches();
 }
